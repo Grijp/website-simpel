@@ -1,21 +1,24 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import PromptClarityHelper from '../components/PromptClarityHelper.jsx'
-import PromptSemanticHelper from '../components/PromptSemanticHelper.jsx'
 import SiteHeader from '../components/SiteHeader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
-import DynamicPage from '../components/DynamicPage.jsx'
-import { runAgent } from '../lib/agentApi.js'
+import DynamicStage from '../components/DynamicStage.jsx'
+import { runFlow } from '../lib/flowApi.js'
 
-export default function LandingPage() {
+export default function AiLabPage() {
   const navigate = useNavigate()
   const [value, setValue] = useState('')
   const [messages, setMessages] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [activeTab, setActiveTab] = useState('programma')
-  const [submitToken, setSubmitToken] = useState(0)
-  const [pageConfig, setPageConfig] = useState(null)
+  const [flow, setFlow] = useState(null)
+  const [currentMode, setCurrentMode] = useState('info')
+  const [debug, setDebug] = useState(null)
+  const [clientTiming, setClientTiming] = useState(null)
+  const [serverMeta, setServerMeta] = useState(null)
+
+  const heroMode = flow?.stage?.shell?.hero || 'show'
 
   const canSend = useMemo(() => value.trim().length > 0 && !isLoading, [value, isLoading])
 
@@ -26,13 +29,32 @@ export default function LandingPage() {
 
     setError('')
     setIsLoading(true)
-    setSubmitToken((x) => x + 1)
+    setClientTiming(null)
+    setServerMeta(null)
     setMessages((prev) => [...prev, { role: 'user', text }])
 
     try {
-      const data = await runAgent({ message: text, mode: 'info' })
-      setMessages((prev) => [...prev, { role: 'assistant', text: data?.reply || '' }])
-      setPageConfig(data?.pageConfig || null)
+      const t0 = performance.now()
+      const { data, meta } = await runFlow({ message: text, debug: true })
+      const t1 = performance.now()
+
+      setServerMeta(meta)
+      setFlow(data)
+      setDebug(data?.debug || null)
+      const a = data?.analysis
+      setMessages((prev) => [...prev, { role: 'assistant', text: a?.reason ? `Mode: ${a.mode}. ${a.reason}` : 'OK.' }])
+      if (a?.mode) setCurrentMode(a.mode)
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const t2 = performance.now()
+          setClientTiming({
+            fetchMs: Math.round(t1 - t0),
+            renderMs: Math.round(t2 - t1),
+            totalMs: Math.round(t2 - t0),
+          })
+        })
+      })
     } catch (_err) {
       setError(
         typeof _err?.message === 'string' && _err.message !== 'request_failed'
@@ -51,8 +73,12 @@ export default function LandingPage() {
         <SiteHeader />
 
         <main className="lpMain">
-          <h1 className="lpH1">Jij gebruikt het.</h1>
-          <div className="lpH2">Maar gebruikt het nog niet echt.</div>
+          {heroMode !== 'hide' ? (
+            <>
+              <h1 className="lpH1">AI lab.</h1>
+              {heroMode === 'show' ? <div className="lpH2">Experimentele flow (LLM).</div> : null}
+            </>
+          ) : null}
 
           <form className="lpCommand" onSubmit={onSubmit}>
             <span className="lpPrompt" aria-hidden="true">
@@ -64,7 +90,7 @@ export default function LandingPage() {
             <input
               id="question"
               className="lpInput"
-              placeholder="Typ bijv. ‘programma’ of een werkdoel..."
+              placeholder="Typ bijv. ‘contact’ of een inhoudelijke vraag..."
               value={value}
               onChange={(ev) => setValue(ev.target.value)}
               autoComplete="off"
@@ -75,8 +101,27 @@ export default function LandingPage() {
             </button>
           </form>
 
-          <PromptClarityHelper text={value} />
-          <PromptSemanticHelper text={value} runOnSubmitToken={submitToken} />
+          <div className="lpTabs" role="tablist" aria-label="AI mode (read-only)">
+            <button type="button" role="tab" aria-selected={currentMode === 'info'} className={`lpTab ${currentMode === 'info' ? 'isActive' : ''}`}>
+              INFO
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={currentMode === 'uitleg'}
+              className={`lpTab ${currentMode === 'uitleg' ? 'isActive' : ''}`}
+            >
+              UITLEG
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={currentMode === 'assessment'}
+              className={`lpTab ${currentMode === 'assessment' ? 'isActive' : ''}`}
+            >
+              ASSESSMENT
+            </button>
+          </div>
 
           <div className="lpTabs" role="tablist" aria-label="Categorie">
             <button
@@ -117,7 +162,7 @@ export default function LandingPage() {
             </button>
           </div>
 
-          <div className="lpHint">Tik een commando om de website te besturen.</div>
+          {heroMode === 'show' ? <div className="lpHint">Experimenteel: gebruikt `/api/flow`.</div> : null}
 
           {(error || messages.length > 0) && (
             <div className="lpChat" aria-live="polite">
@@ -130,7 +175,14 @@ export default function LandingPage() {
             </div>
           )}
 
-          <DynamicPage pageConfig={pageConfig} />
+          <DynamicStage stage={flow?.stage} isLoading={isLoading} />
+
+          {debug ? (
+            <details className="flowDebug">
+              <summary>Debug timings</summary>
+              <pre className="flowDebugPre">{JSON.stringify({ serverMeta, serverDebug: debug, clientTiming }, null, 2)}</pre>
+            </details>
+          ) : null}
         </main>
 
         <footer className="lpFooter">

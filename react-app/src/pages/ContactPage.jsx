@@ -1,9 +1,7 @@
 import { ValidationError, useForm } from '@formspree/react'
 import SiteHeader from '../components/SiteHeader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
-
-const BOOKING_URL =
-  'https://outlook.office.com/bookwithme/user/f9cfb3127748469b8dee2e89458e3645@principlesai.nl/meetingtype/Bz4Xr2ffWEm-jQvyl4WVYw2?anonymous&ismsaljsauthenabled&ep=mlink'
+import { BOOKING_URL } from '../lib/booking.js'
 
 export default function ContactPage() {
   const [state, handleSubmit] = useForm('mnjlblqn')

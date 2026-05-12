@@ -1,6 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-
-import logoSvg from '/logo.svg?raw'
+import logoUrl from '/logo.svg'
 
 export default function SiteHeader() {
   const { pathname } = useLocation()
@@ -9,11 +8,7 @@ export default function SiteHeader() {
     <header className="lpHeader">
       <Link className="lpBrand lpHomeLink" to="/" aria-label="Ga naar home">
         <span className="lpMark" aria-hidden="true">
-          <span
-            className="lpMarkSvg"
-            // `logo.svg` uses `currentColor`, so CSS can control it.
-            dangerouslySetInnerHTML={{ __html: logoSvg }}
-          />
+          <img className="lpMarkImg" src={logoUrl} alt="" />
         </span>
         <span className="lpBrandText">PRINCIPLESAI</span>
       </Link>
@@ -26,6 +21,10 @@ export default function SiteHeader() {
           CONTACT
         </Link>
       </nav>
+
+      <Link className="lpHeaderCta" to="/contact">
+        Plan gesprek
+      </Link>
     </header>
   )
 }

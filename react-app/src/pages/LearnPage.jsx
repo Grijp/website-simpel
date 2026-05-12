@@ -1,218 +1,173 @@
+import { useState } from 'react'
 import SiteHeader from '../components/SiteHeader.jsx'
 import SiteFooter from '../components/SiteFooter.jsx'
+import FitCheckModal from '../components/FitCheckModal.jsx'
 
 export default function LearnPage() {
+  const [isFitCheckOpen, setIsFitCheckOpen] = useState(false)
+
   return (
     <div className="container">
       <div className="lpShell">
-        {/* Reuse the same header to keep unity across pages */}
         <SiteHeader />
 
-        <div className="workshop wsSeamless">
-          <div className="wsBadge">Workshop</div>
-          <h1 className="wsTitle">Denken met AI</h1>
-          <h2 className="wsSubtitle">Train je basisvaardigheid.</h2>
-
-          <div className="wsIntroGrid">
-            <div className="wsIntroLeft">
-              <h3 className="wsIntroHeading">Snel itereren van input naar output.</h3>
-              <div className="wsIntroList">
-                <span>Je werkt met je eigen taken.</span>
-                <span>Je doet veel pogingen.</span>
-                <span>Je past steeds kleine dingen aan.</span>
-                <span>Je ontdekt wat er mogelijk is.</span>
+        <main className="ws2">
+          <section className="ws2Hero" aria-labelledby="workshop-title">
+            <div className="ws2Top">
+              <div className="ws2Pill" aria-label="Workshop">
+                WORKSHOP
               </div>
-              <div className="wsIntroConclusion">Meer pogingen. Meer inzicht. Meer resultaat.</div>
             </div>
 
-            <div className="wsFlowCard">
-              <div className="wsFlowWrap">
-                <div className="wsFlowLoop" aria-hidden="true">
-                  <div className="wsFlowMask">De kern van de workshop</div>
-                  <div className="wsFlowArrow wsFlowArrowTop">›</div>
-                  <div className="wsFlowArrow wsFlowArrowBottom">‹</div>
+            <h1 id="workshop-title" className="ws2H1">
+              Waarom AI je nog niet echt helpt
+            </h1>
+
+            <p className="ws2Lead">Je stelt vragen. Je krijgt antwoorden. Maar daar stopt het.</p>
+          </section>
+
+          <div className="ws2Divider" aria-hidden="true" />
+
+          <section className="ws2Section ws2ProcessSection" aria-labelledby="process-title">
+            <h2 id="process-title" className="ws2H2">
+              Zo los je dat op
+            </h2>
+
+            <div className="ws2FlowCard" aria-label="Input naar output proces">
+              <div className="ws2FlowSteps">
+                <div className="ws2Step">
+                  <div className="ws2StepIcon" aria-hidden="true">
+                    ✎
+                  </div>
+                  <div className="ws2StepTitle">Input</div>
+                  <div className="ws2StepDesc">Je geeft input</div>
                 </div>
 
-                <div className="wsFlowSteps">
-                  <div className="wsFlowStep">
-                    <div className="wsIconBox wsIconPurple" aria-hidden="true">
-                      ✎
-                    </div>
-                    <div className="wsStepTitle">Input</div>
-                    <div className="wsStepDesc">Iets invoeren</div>
-                  </div>
+                <div className="ws2Arrow" aria-hidden="true">
+                  →
+                </div>
 
-                  <div className="wsStraightArrow" aria-hidden="true">
-                    →
+                <div className="ws2Step">
+                  <div className="ws2StepIcon" aria-hidden="true">
+                    ✦
                   </div>
+                  <div className="ws2StepTitle">Output</div>
+                  <div className="ws2StepDesc">Je krijgt resultaat</div>
+                </div>
 
-                  <div className="wsFlowStep">
-                    <div className="wsIconBox wsIconBlue" aria-hidden="true">
-                      ✦
-                    </div>
-                    <div className="wsStepTitle">Output</div>
-                    <div className="wsStepDesc">Kijken wat er gebeurt</div>
-                  </div>
+                <div className="ws2Arrow" aria-hidden="true">
+                  →
+                </div>
 
-                  <div className="wsStraightArrow" aria-hidden="true">
-                    →
+                <div className="ws2Step">
+                  <div className="ws2StepIcon" aria-hidden="true">
+                    ≋
                   </div>
+                  <div className="ws2StepTitle">Aanpassen</div>
+                  <div className="ws2StepDesc">Je stuurt bij</div>
+                </div>
 
-                  <div className="wsFlowStep">
-                    <div className="wsIconBox wsIconGreen" aria-hidden="true">
-                      ≋
-                    </div>
-                    <div className="wsStepTitle">Aanpassen</div>
-                    <div className="wsStepDesc">Iets veranderen</div>
-                  </div>
+                <div className="ws2Arrow" aria-hidden="true">
+                  →
+                </div>
 
-                  <div className="wsStraightArrow" aria-hidden="true">
-                    →
+                <div className="ws2Step">
+                  <div className="ws2StepIcon" aria-hidden="true">
+                    ↻
                   </div>
-
-                  <div className="wsFlowStep">
-                    <div className="wsIconBox wsIconOutline" aria-hidden="true">
-                      ↻
-                    </div>
-                    <div className="wsStepTitle">Opnieuw</div>
-                    <div className="wsStepDesc">Proberen</div>
-                  </div>
+                  <div className="ws2StepTitle">Opnieuw</div>
+                  <div className="ws2StepDesc">Je verfijnt verder</div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="wsDivider" />
+          </section>
 
-          <div className="wsSection">
-            <h3 className="wsSectionTitle">Het programma</h3>
-            <div className="wsProgramGrid">
-              <div className="wsProgramItem">
-                <div className="wsProgramNumber">01</div>
-                <div className="wsProgramIcon" aria-hidden="true">
-                  ↗
-                </div>
-                <div className="wsProgramTitle">Korte start</div>
-                <div className="wsProgramDesc">Kort inzicht in hoe je anders kijkt naar output.</div>
-              </div>
-              <div className="wsProgramItem">
-                <div className="wsProgramNumber">02</div>
-                <div className="wsProgramIcon" aria-hidden="true">
-                  ▶
-                </div>
-                <div className="wsProgramTitle">Direct beginnen</div>
-                <div className="wsProgramDesc">Je pakt een eigen taak en voert in zoals je normaal doet.</div>
-              </div>
-              <div className="wsProgramItem">
-                <div className="wsProgramNumber">03</div>
-                <div className="wsProgramIcon" aria-hidden="true">
-                  ↺
-                </div>
-                <div className="wsProgramTitle">Itereren in tempo</div>
-                <div className="wsProgramDesc">Input → output → aanpassen → opnieuw. Steeds sneller.</div>
-              </div>
-              <div className="wsProgramItem">
-                <div className="wsProgramNumber">04</div>
-                <div className="wsProgramIcon" aria-hidden="true">
-                  ◇
-                </div>
-                <div className="wsProgramTitle">Variatie testen</div>
-                <div className="wsProgramDesc">
-                  Andere woorden, andere invalshoeken, meer of minder context. Je verkent.
-                </div>
-              </div>
-              <div className="wsProgramItem">
-                <div className="wsProgramNumber">05</div>
-                <div className="wsProgramIcon" aria-hidden="true">
-                  ◎
-                </div>
-                <div className="wsProgramTitle">Richting aanbrengen</div>
-                <div className="wsProgramDesc">Waar moet het heen? Wat mist er nog? Wat moet scherper?</div>
-              </div>
-              <div className="wsProgramItem">
-                <div className="wsProgramNumber">06</div>
-                <div className="wsProgramIcon" aria-hidden="true">
-                  ▦
-                </div>
-                <div className="wsProgramTitle">Flow</div>
-                <div className="wsProgramDesc">Loskomen van perfecte zinnen. Werken in snelle fragmenten.</div>
-              </div>
+          <section className="ws2OfferSection" aria-labelledby="offer-title">
+            <h2 id="offer-title" className="ws2H2">
+              Zo ziet dat er concreet uit
+            </h2>
+
+            <div className="ws2InfoGrid" aria-label="Workshop en vervolgtraject">
+              <article className="ws2InfoCard">
+                <h2>Praktische workshop (3 uur)</h2>
+                <p>In één dagdeel werk je met je eigen taken en leer je hoe je AI direct toepast in je werk.</p>
+
+                <h3>Wat je doet</h3>
+                <ul>
+                  <li>Korte introductie: wat AI is en hoe het werkt</li>
+                  <li>Werken met je eigen taken</li>
+                  <li>Oefenen met input → output → aanpassen → opnieuw</li>
+                  <li>Direct resultaat zien</li>
+                </ul>
+
+                <h3>Wat je eruit haalt</h3>
+                <ul>
+                  <li>Je weet hoe je moet beginnen</li>
+                  <li>Je weet hoe je moet bijsturen</li>
+                  <li>Je krijgt sneller bruikbare output</li>
+                </ul>
+              </article>
+
+              <article className="ws2InfoCard">
+                <h2>Voor wie verder wil</h2>
+                <h3>1-op-1 traject (4 weken)</h3>
+                <p>Voor mensen die dit niet alleen willen begrijpen, maar echt willen toepassen in hun werk.</p>
+
+                <h3>Hoe dat werkt</h3>
+                <ul>
+                  <li>4 weken</li>
+                  <li>1 sessie per week online</li>
+                  <li>Werken met jouw eigen werkproces</li>
+                </ul>
+
+                <h3>Waar we aan werken</h3>
+                <ul>
+                  <li>Hoe je AI structureel inzet</li>
+                  <li>Waar je tijd verliest en waar winst zit</li>
+                  <li>Hoe je sneller en met meer grip werkt</li>
+                </ul>
+              </article>
             </div>
-          </div>
+          </section>
 
-          <div className="wsDivider" />
+          <section className="ws2CtaBlock" aria-label="Check of de workshop past">
+            <p className="ws2CtaLead">
+              Dit is geen theorie.
+              <br />
+              Je werkt met je eigen werk en ziet direct resultaat.
+            </p>
 
-          <div className="wsSection">
-            <h3 className="wsSectionTitle">Wat je gaat ervaren</h3>
-            <div className="wsExperienceGrid">
-              <div className="wsExpItem">
-                <div className="wsExpIcon" aria-hidden="true">
-                  ⚡
-                </div>
-                <div className="wsExpContent">
-                  <div className="wsExpTitle">Snel proberen</div>
-                  <div className="wsExpDesc">Je kunt snel veel pogingen doen.</div>
-                </div>
-              </div>
-              <div className="wsExpItem">
-                <div className="wsExpIcon" aria-hidden="true">
-                  ◉
-                </div>
-                <div className="wsExpContent">
-                  <div className="wsExpTitle">Meer mogelijkheden</div>
-                  <div className="wsExpDesc">Je ontdekt meer dan je vooraf dacht.</div>
-                </div>
-              </div>
-              <div className="wsExpItem">
-                <div className="wsExpIcon" aria-hidden="true">
-                  ↗
-                </div>
-                <div className="wsExpContent">
-                  <div className="wsExpTitle">Kleine aanpassingen, groot verschil</div>
-                  <div className="wsExpDesc">Output verandert door aanpassingen in je input.</div>
-                </div>
-              </div>
-              <div className="wsExpItem">
-                <div className="wsExpIcon" aria-hidden="true">
-                  ↻
-                </div>
-                <div className="wsExpContent">
-                  <div className="wsExpTitle">Vaker gebruiken</div>
-                  <div className="wsExpDesc">Je krijgt er plezier in en gaat AI vaker inzetten.</div>
-                </div>
-              </div>
-            </div>
-          </div>
+            <button className="ws2Cta" type="button" onClick={() => setIsFitCheckOpen(true)}>
+              <span>CHECK OF DIT BIJ MIJ PAST</span>
+              <span className="ws2CtaArrow" aria-hidden="true">
+                ›
+              </span>
+            </button>
 
-          <div className="wsDevelop">
-            <div className="wsDevelopIcon" aria-hidden="true">
-              ⬤
-            </div>
-            <div className="wsDevelopText">
-              <div className="wsDevelopTitle">Wat je ontwikkelt</div>
-              <div className="wsDevelopDesc">Een basisvaardigheid die je werk direct sterker maakt:</div>
-              <div className="wsDevelopHighlight">snel denken door te itereren met AI.</div>
-            </div>
-          </div>
+            <p className="ws2CtaSub">Korte intake, geen sales.</p>
 
-          <div className="wsFollowup">
-            <div className="wsFollowupDivider" aria-hidden="true" />
-            <div className="wsFollowupContent">
-              <div className="wsFollowupIcon" aria-hidden="true">
-                ◍
-              </div>
-              <div className="wsFollowupText">
-                <div className="wsFollowupTitle">Vervolg (optioneel)</div>
-                <div className="wsFollowupDesc">
-                  Begeleiding om dit structureel toe te passen in je dagelijkse werk.
-                </div>
-              </div>
+            <div className="ws2Trust" aria-label="Kenmerken">
+              <span className="ws2Dot" aria-hidden="true" />
+              Werkt met je eigen werk
+              <span className="ws2Sep" aria-hidden="true">
+                |
+              </span>
+              <span className="ws2Dot" aria-hidden="true" />
+              Geen voorbereiding nodig
+              <span className="ws2Sep" aria-hidden="true">
+                |
+              </span>
+              <span className="ws2Dot" aria-hidden="true" />
+              Direct toepasbaar
             </div>
-          </div>
-        </div>
+          </section>
+        </main>
 
         <SiteFooter />
       </div>
+
+      <FitCheckModal isOpen={isFitCheckOpen} onClose={() => setIsFitCheckOpen(false)} />
     </div>
   )
 }

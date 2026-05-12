@@ -8,10 +8,12 @@
     "dev:server": "nodemon server/server.js",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "cross-env SERVE_STATIC=1 NODE_ENV=production node server/server.js"
   },
   "dependencies": {
     "@formspree/react": "^3.0.0",
+    "cross-env": "^10.1.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "openai": "^6.34.0",
