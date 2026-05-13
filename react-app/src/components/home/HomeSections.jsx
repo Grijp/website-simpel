@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
 import HeroBrainCircuitVisual from './HeroBrainCircuitVisual.jsx'
+import { BOOKING_URL } from '../../lib/booking.js'
 
 function FeatureIcon({ name }) {
   const common = { width: 22, height: 22, viewBox: '0 0 24 24', fill: 'none', 'aria-hidden': true }
@@ -76,7 +76,12 @@ export function HomeHero({ onOpenFitCheck, timelineSteps = [] }) {
                 </span>
               </button>
 
-              <Link className="homeSecondaryLink homeTalkLink homeTalkLink--calendar" to="/contact">
+              <a
+                className="homeSecondaryLink homeTalkLink homeTalkLink--calendar"
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <span className="homeCalendarIcon" aria-hidden="true">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
                     <rect x="3.5" y="5" width="17" height="15" rx="2" stroke="currentColor" strokeWidth="1.4" />
@@ -84,7 +89,7 @@ export function HomeHero({ onOpenFitCheck, timelineSteps = [] }) {
                   </svg>
                 </span>
                 Plan een gesprek
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -265,9 +270,9 @@ export function HomeFinalCta() {
             Klaar om <em>meer uit jezelf</em> te halen met AI?
           </h2>
         </div>
-        <Link className="homeFinalCtaButton" to="/contact">
+        <a className="homeFinalCtaButton" href={BOOKING_URL} target="_blank" rel="noreferrer">
           Plan een gesprek <span className="homeFinalCtaBtnArrow" aria-hidden="true">→</span>
-        </Link>
+        </a>
       </div>
     </section>
   )
@@ -287,9 +292,9 @@ export function MobileStickyCta() {
         </span>
       </div>
 
-      <Link className="mobileStickyButton" to="/contact">
+      <a className="mobileStickyButton" href={BOOKING_URL} target="_blank" rel="noreferrer">
         Plan een gesprek <span aria-hidden="true">→</span>
-      </Link>
+      </a>
     </div>
   )
 }

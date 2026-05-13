@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import logoUrl from '/logo.svg'
-
-export default function SiteHeader() {
+import { BOOKING_URL } from '../lib/booking.js'
+export default function SiteHeader({ hidePlanCta = false } = {}) {
   const { pathname } = useLocation()
 
   return (
@@ -22,10 +22,11 @@ export default function SiteHeader() {
         </Link>
       </nav>
 
-      <Link className="lpHeaderCta" to="/contact">
-        Plan gesprek
-      </Link>
-    </header>
+      {!hidePlanCta && (
+        <a className="lpHeaderCta" href={BOOKING_URL} target="_blank" rel="noreferrer">
+          Plan gesprek
+        </a>
+      )}    </header>
   )
 }
 

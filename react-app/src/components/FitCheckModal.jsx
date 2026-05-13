@@ -63,6 +63,7 @@ export default function FitCheckModal({ isOpen, onClose }) {
   const [answers, setAnswers] = useState({})
   const [example, setExample] = useState('')
   const [isSending, setIsSending] = useState(false)
+  const [bookingPopupBlocked, setBookingPopupBlocked] = useState(false)
   const isResult = stepIndex >= TOTAL_STEPS
   const current = STEPS[stepIndex]
 
@@ -81,6 +82,7 @@ export default function FitCheckModal({ isOpen, onClose }) {
     setAnswers({})
     setExample('')
     setIsSending(false)
+    setBookingPopupBlocked(false)
   }, [isOpen])
 
   const summary = useMemo(() => buildSummary(answers), [answers])
@@ -124,16 +126,25 @@ export default function FitCheckModal({ isOpen, onClose }) {
     }
   }
 
+  /**
+   * Open booking in the same synchronous turn as the click, then send answers in the background.
+   * Opening only after `await fetch` is often blocked as a pop-up.
+   */
   async function openBooking() {
+    const bookingWindow = window.open(BOOKING_URL, '_blank', 'noopener,noreferrer')
+    if (!bookingWindow) {
+      setBookingPopupBlocked(true)
+    }
     setIsSending(true)
     try {
       await sendAnswersBeforeBooking()
-      window.open(BOOKING_URL, '_blank', 'noopener,noreferrer')
     } catch {
-      // Booking should never be blocked by a failed summary handoff.
-      window.open(BOOKING_URL, '_blank', 'noopener,noreferrer')
+      // Intake-antwoorden zijn optioneel; agenda staat al open als de pop-up niet geblokkeerd was.
     } finally {
       setIsSending(false)
+      if (bookingWindow) {
+        onClose()
+      }
     }
   }
 
@@ -220,7 +231,26 @@ export default function FitCheckModal({ isOpen, onClose }) {
             <button className="fitPrimary fitResultCta" type="button" onClick={openBooking} disabled={isSending}>
               {isSending ? 'ANTWOORDEN WORDEN MEEGESTUURD...' : 'PLAN EEN KORTE INTAKE'}
             </button>
-            <div className="fitCtaNote">15 min – we kijken of dit bij je past (geen sales)</div>
+            <div className="fitCtaNote">
+              Opent de Outlook-agenda in een nieuw tabblad (15 min, geen salesdruk).
+            </div>
+            {bookingPopupBlocked ? (
+              <p className="fitBookingFallback">
+                Je browser blokkeerde het nieuwe tabblad.{' '}
+                <a
+                  className="fitBookingFallbackLink"
+                  href={BOOKING_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => {
+                    void sendAnswersBeforeBooking()
+                  }}
+                >
+                  Open de agenda hier
+                </a>{' '}
+                — je antwoorden sturen we alsnog mee.
+              </p>
+            ) : null}
           </div>
         )}
       </section>

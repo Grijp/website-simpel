@@ -3406,6 +3406,22 @@ body.isHomeTheme .homeCalendarIcon{
   font-size: 12px;
   color: rgba(18,18,18,.46);
 }
+.fitBookingFallback{
+  margin-top: 14px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(18,18,18,.62);
+}
+.fitBookingFallbackLink{
+  color: rgba(22,63,67,.95);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.fitBookingFallbackLink:hover{
+  color: rgba(18,18,18,.9);
+}
 
 @media (max-width: 520px){
   .fitOverlay{
