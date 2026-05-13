@@ -1,105 +1,90 @@
-import { ValidationError, useForm } from '@formspree/react'
+import { useEffect } from 'react'
 import SiteHeader from '../components/SiteHeader.jsx'
-import SiteFooter from '../components/SiteFooter.jsx'
+import { BOOKING_URL } from '../lib/booking.js'
+import './ContactConvergence.css'
 
-const BOOKING_URL =
-  'https://outlook.office.com/bookwithme/user/f9cfb3127748469b8dee2e89458e3645@principlesai.nl/meetingtype/Bz4Xr2ffWEm-jQvyl4WVYw2?anonymous&ismsaljsauthenabled&ep=mlink'
+const AMBIENT_DOTS = [
+  { top: '14%', left: '11%', delay: '-4s', variant: '' },
+  { top: '22%', left: '84%', delay: '-12s', variant: ' contactConv__dot--c' },
+  { top: '38%', left: '6%', delay: '-2s', variant: ' contactConv__dot--c' },
+  { top: '48%', left: '92%', delay: '-18s', variant: '' },
+  { top: '68%', left: '14%', delay: '-8s', variant: '' },
+  { top: '76%', left: '78%', delay: '-22s', variant: ' contactConv__dot--c' },
+  { top: '88%', left: '22%', delay: '-14s', variant: ' contactConv__dot--c' },
+  { top: '10%', left: '48%', delay: '-6s', variant: '' },
+]
 
 export default function ContactPage() {
-  const [state, handleSubmit] = useForm('mnjlblqn')
+  useEffect(() => {
+    document.body.classList.add('isContactConvergence')
+    return () => document.body.classList.remove('isContactConvergence')
+  }, [])
 
   return (
-    <div className="container">
-      <div className="lpShell">
-        <SiteHeader />
+    <div className="contactConv">
+      <div className="contactConv__bg" aria-hidden="true" />
+      <div className="contactConv__wash" aria-hidden="true" />
 
-        <main className="lpMain">
-          <h1 className="lpH1">Je gebruikt AI. Maar het kan beter.</h1>
-          <div className="lpH2">Kijk waar je winst laat liggen.</div>
+      <svg
+        className="contactConv__flows"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="contactConvFlowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="rgba(192, 132, 252, 0.5)" />
+            <stop offset="55%" stopColor="rgba(124, 58, 237, 0.25)" />
+            <stop offset="100%" stopColor="rgba(34, 211, 238, 0.35)" />
+          </linearGradient>
+        </defs>
+        <path
+          stroke="url(#contactConvFlowGrad)"
+          d="M -8 38 C 18 22 38 52 52 44 S 88 28 112 36"
+        />
+        <path stroke="url(#contactConvFlowGrad)" d="M -6 62 C 24 78 44 48 58 56 S 92 72 108 58" />
+        <path stroke="url(#contactConvFlowGrad)" d="M 108 24 C 82 18 62 42 48 36 S 12 22 -8 30" />
+      </svg>
 
-          <section className="contactPrimary" aria-label="Plan een gesprek">
-            <a className="lpCtaDark contactPlanBtn" href={BOOKING_URL} target="_blank" rel="noreferrer">
-              <span>Kijk in 30 minuten wat er beter kan</span>
-              <span className="lpArrow" aria-hidden="true">
-                ›
-              </span>
-            </a>
-          </section>
-
-          <section className="contactSecondary" aria-label="Contactformulier">
-            <div className="contactTitle">Liever eerst iets vragen?</div>
-            <div className="contactDesc" />
-
-            {state.succeeded ? (
-              <div className="contactSuccess" role="status" aria-live="polite">
-                Bericht ontvangen. Dankjewel—ik kom er snel bij je op terug.
-              </div>
-            ) : (
-              <form className="contactForm" onSubmit={handleSubmit} noValidate>
-                <div className="contactField">
-                  <label className="contactLabel" htmlFor="name">
-                    Je naam
-                  </label>
-                  <input
-                    className="contactControl"
-                    id="name"
-                    name="name"
-                    type="text"
-                    autoComplete="name"
-                    placeholder="Je naam"
-                    required
-                    disabled={state.submitting}
-                  />
-                  <ValidationError prefix="Je naam" field="name" errors={state.errors} />
-                </div>
-
-                <div className="contactField">
-                  <label className="contactLabel" htmlFor="email">
-                    E-mail
-                  </label>
-                  <input
-                    className="contactControl"
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    inputMode="email"
-                    placeholder="naam@bedrijf.nl"
-                    required
-                    disabled={state.submitting}
-                  />
-                  <ValidationError prefix="E-mail" field="email" errors={state.errors} />
-                </div>
-
-                <div className="contactField">
-                  <label className="contactLabel" htmlFor="message">
-                    Wat wil je scherper krijgen?
-                  </label>
-                  <textarea
-                    className="contactControl contactTextarea"
-                    id="message"
-                    name="message"
-                    rows={5}
-                    placeholder="Wat wil je scherper krijgen?"
-                    required
-                    disabled={state.submitting}
-                  />
-                  <ValidationError prefix="Bericht" field="message" errors={state.errors} />
-                </div>
-
-                <div className="contactActions">
-                  <button className="btn btn-secondary contactSubmit" type="submit" disabled={state.submitting}>
-                    {state.submitting ? 'Versturen…' : 'Stel je vraag'}
-                  </button>
-                </div>
-              </form>
-            )}
-          </section>
-        </main>
-
-        <SiteFooter />
+      <div className="contactConv__dots" aria-hidden="true">
+        {AMBIENT_DOTS.map((d, i) => (
+          <span
+            key={i}
+            className={`contactConv__dot${d.variant}`}
+            style={{
+              top: d.top,
+              left: d.left,
+              animationDelay: d.delay,
+              animationDuration: `${32 + (i % 5) * 7}s`,
+            }}
+          />
+        ))}
       </div>
+
+      <div className="contactConv__vignette" aria-hidden="true" />
+
+      <div className="contactConv__header">
+        <SiteHeader hidePlanCta />
+      </div>
+
+      <main className="contactConv__main" id="contact-main">
+        <article className="contactConvCard" aria-labelledby="contact-name-heading">
+          <p className="contactConvCard__brand">PrinciplesAI</p>
+          <h1 id="contact-name-heading" className="contactConvCard__name">
+            Mathijs van der Grijp
+          </h1>
+          <div className="contactConvCard__meta">
+            <a href="tel:+31610277261">06 10277261</a>
+            <a href="mailto:mathijs@principlesai.nl">Mathijs@principlesai.nl</a>
+          </div>
+          <a className="contactConvCard__cta" href={BOOKING_URL} target="_blank" rel="noreferrer">
+            Plan een gesprek
+            <span className="contactConvCard__ctaArrow" aria-hidden="true">
+              →
+            </span>
+          </a>
+        </article>
+      </main>
     </div>
   )
 }
-

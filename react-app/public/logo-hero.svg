@@ -90,6 +90,19 @@
       <path id="Vector_73" d="M248.31 119.23L245.39 116.12C245.39 116.12 250.14 111.69 254.88 107.26C259.59 102.87 264.29 98.48 264.36 98.42L267.28 101.53C267.28 101.53 262.53 105.96 257.8 110.38C253.09 114.77 248.38 119.17 248.32 119.23M273.09 93.34C273.09 93.34 292.03 75.67 292.05 75.64L273.09 93.34Z" fill="currentColor"/>
       <path id="Vector_74" d="M274.54 94.9L271.63 91.78C271.71 91.71 290.46 74.21 290.59 74.08L293.51 77.19L274.54 94.9ZM191.87 110.09C191.96 110 253.26 49.32 255.07 47.52L191.87 110.09Z" fill="currentColor"/>
       <path id="Vector_75" d="M193.37 111.6L190.36 108.57C190.45 108.48 251.3 48.24 253.57 45.99L256.57 49.02C254.75 50.82 193.57 111.38 193.37 111.59M211.24 121.53C213.37 119.47 265.3 69.14 267.14 67.35L211.24 121.53Z" fill="currentColor"/>
+
+      <!-- Hero extension: plak paden aan de LLM-kant (rechterhelft) -->
+      <g id="hero-taalmodel-uitlopers" class="heroTaalmodelOut" fill="none" stroke="currentColor" stroke-linecap="round">
+        <path d="M292 140 C304 134 315 138 330 136" stroke-width="1.3" opacity=".42" />
+        <path d="M296 168 C308 160 318 166 330 162" stroke-width="1.2" opacity=".36" />
+        <path d="M292 204 C306 198 318 206 330 202" stroke-width="1.15" opacity=".32" />
+        <path d="M286 234 C302 230 316 240 330 236" stroke-width="1.05" opacity=".28" />
+
+        <circle class="heroTaalmodelOutDot" cx="328" cy="136" r="2.1" fill="currentColor" opacity=".42" />
+        <circle class="heroTaalmodelOutDot" cx="328" cy="162" r="1.95" fill="currentColor" opacity=".36" />
+        <circle class="heroTaalmodelOutDot" cx="328" cy="202" r="1.9" fill="currentColor" opacity=".32" />
+        <circle class="heroTaalmodelOutDot" cx="328" cy="236" r="1.85" fill="currentColor" opacity=".28" />
+      </g>
     </g>
     <g id="linkerhelft_1">
       <path id="Vector_76" d="M118.1 109.51C112.75 109.51 112.81 118.19 118.2 118.04C123.79 118.02 123.53 109.51 118.3 109.51H118.1Z" fill="currentColor"/>

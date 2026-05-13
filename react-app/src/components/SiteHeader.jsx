@@ -1,19 +1,14 @@
 import { Link, useLocation } from 'react-router-dom'
-
-import logoSvg from '/logo.svg?raw'
-
-export default function SiteHeader() {
+import logoUrl from '/logo.svg'
+import { BOOKING_URL } from '../lib/booking.js'
+export default function SiteHeader({ hidePlanCta = false } = {}) {
   const { pathname } = useLocation()
 
   return (
     <header className="lpHeader">
       <Link className="lpBrand lpHomeLink" to="/" aria-label="Ga naar home">
         <span className="lpMark" aria-hidden="true">
-          <span
-            className="lpMarkSvg"
-            // `logo.svg` uses `currentColor`, so CSS can control it.
-            dangerouslySetInnerHTML={{ __html: logoSvg }}
-          />
+          <img className="lpMarkImg" src={logoUrl} alt="" />
         </span>
         <span className="lpBrandText">PRINCIPLESAI</span>
       </Link>
@@ -26,7 +21,12 @@ export default function SiteHeader() {
           CONTACT
         </Link>
       </nav>
-    </header>
+
+      {!hidePlanCta && (
+        <a className="lpHeaderCta" href={BOOKING_URL} target="_blank" rel="noreferrer">
+          Plan gesprek
+        </a>
+      )}    </header>
   )
 }
 
